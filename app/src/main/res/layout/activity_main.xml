@@ -1,113 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="@android:color/black">
+    android:fillViewport="true"
+    android:background="#121212">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CrashGuard"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="32dp"/>
-
-    <!-- Contacts input with save button -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal"
-        android:background="@drawable/rounded_input"
-        android:padding="8dp"
-        android:layout_marginBottom="20dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-        <EditText
-            android:id="@+id/etEmergencyContacts"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="Enter emergency contact"
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CrashGuard"
+            android:textSize="28sp"
+            android:textStyle="bold"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:background="@android:color/transparent"
-            android:paddingHorizontal="12dp"
-            android:inputType="phone" />
-
-        <ImageButton
-            android:id="@+id/btnSaveContacts"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/rounded_button"
-            android:src="@android:drawable/ic_menu_save"
-            android:tint="@android:color/holo_red_dark"/>
-    </LinearLayout>
-
-    <!-- Test Mode Switch -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="28dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test Mode"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="12dp"/>
+            android:text="Smart Accident Detection &amp; SOS Alert"
+            android:textSize="14sp"
+            android:textColor="#B0B0B0"
+            android:layout_marginBottom="32dp"/>
 
-        <Switch
-            android:id="@+id/switchTestMode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        <!-- Emergency Contact Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_input"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
 
-    <!-- SOS Button -->
-    <Button
-        android:id="@+id/btnSos"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="SEND SOS"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/rounded_button_red"
-        android:layout_marginBottom="28dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emergency Contact Number"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#03DAC5"
+                android:layout_marginBottom="8dp"/>
 
-    <!-- Start / Stop detection buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <EditText
+                    android:id="@+id/etEmergencyContacts"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="+1234567890"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#666666"
+                    android:background="@android:color/transparent"
+                    android:inputType="phone"
+                    android:paddingHorizontal="8dp"/>
+
+                <Button
+                    android:id="@+id/btnSaveContacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="Save"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/rounded_button"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Test Mode Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_input"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Test Mode"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <Switch
+                    android:id="@+id/switchTestMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enables low-threshold testing (shake phone to test crash alert)."
+                android:textSize="12sp"
+                android:textColor="#888888"/>
+        </LinearLayout>
+
+        <!-- Status Indicator -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status: Detection Inactive"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FF3B30"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Start / Stop Detection Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnStartDetection"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="START"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rounded_button"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnStopDetection"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="STOP"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rounded_button"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- SOS Button -->
         <Button
-            android:id="@+id/btnStartDetection"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:text="START DETECTION"
+            android:id="@+id/btnSos"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="EMERGENCY SOS"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:textColor="@android:color/white"
-            android:background="@drawable/rounded_button"
-            android:layout_marginEnd="12dp"/>
+            android:background="@drawable/rounded_button_red"
+            android:layout_marginBottom="24dp"/>
 
-        <Button
-            android:id="@+id/btnStopDetection"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:text="STOP DETECTION"
-            android:textColor="@android:color/white"
-            android:background="@drawable/rounded_button"/>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

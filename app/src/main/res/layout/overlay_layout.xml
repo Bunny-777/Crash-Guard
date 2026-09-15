@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@android:color/black">
+    android:background="@drawable/overlay_background">
 
-    <!-- Title -->
+    <!-- Warning Header -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Emergency Alert In"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
+        android:text="🚨 CRASH DETECTED!"
+        android:textColor="#FF3B30"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="36dp"/>
+        android:letterSpacing="0.05"
+        android:layout_marginBottom="8dp"/>
 
-    <!-- Countdown Circle with Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Emergency alert will be triggered automatically"
+        android:textColor="#B0B0B0"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Countdown Container -->
     <FrameLayout
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="24dp">
 
-        <!-- Circular Progress -->
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -34,26 +43,24 @@
             android:progress="10"
             android:progressDrawable="@drawable/circular_progress"/>
 
-        <!-- Countdown Text -->
         <TextView
             android:id="@+id/tv_countdown"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Sending SOS in 10s"
+            android:text="10s"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="36sp"
             android:textStyle="bold"/>
     </FrameLayout>
 
-    <!-- Extra Info -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crash detected. Cancel if this was not real."
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        android:layout_marginBottom="32dp"/>
+        android:text="Tap Cancel if this is a false alarm."
+        android:textColor="#8E8E93"
+        android:textSize="13sp"
+        android:layout_marginBottom="28dp"/>
 
     <!-- Action Buttons -->
     <LinearLayout
@@ -65,21 +72,23 @@
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="CANCEL ALERT"
-            android:textAllCaps="true"
+            android:layout_height="56dp"
+            android:text="CANCEL (FALSE ALARM)"
+            android:textAllCaps="false"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_button"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"/>
 
         <Button
             android:id="@+id/btn_send_now"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="SEND NOW"
-            android:textAllCaps="true"
+            android:layout_height="56dp"
+            android:text="SEND SOS NOW"
+            android:textAllCaps="false"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@android:color/white"
             android:background="@drawable/rounded_button_red"/>
     </LinearLayout>

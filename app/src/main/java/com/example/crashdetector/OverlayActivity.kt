@@ -1,10 +1,13 @@
 package com.example.crashdetector
 
+import android.media.Ringtone
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -12,13 +15,15 @@ class OverlayActivity : AppCompatActivity() {
 
     private var countDownTimer: CountDownTimer? = null
     private lateinit var countdownText: TextView
+    private lateinit var progressBar: ProgressBar
     private lateinit var btnSendNow: Button
     private lateinit var btnCancel: Button
+    private var ringtone: Ringtone? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 🟢 Make sure this window floats above all other apps
+        // Make sure window floats above other apps
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
         } else {
@@ -26,7 +31,6 @@ class OverlayActivity : AppCompatActivity() {
             window.setType(WindowManager.LayoutParams.TYPE_PHONE)
         }
 
-        // Prevent the overlay from being dismissed by touches outside
         window.addFlags(
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
@@ -37,44 +41,65 @@ class OverlayActivity : AppCompatActivity() {
         setContentView(R.layout.overlay_layout)
 
         countdownText = findViewById(R.id.tv_countdown)
+        progressBar = findViewById(R.id.progressBar)
         btnSendNow = findViewById(R.id.btn_send_now)
         btnCancel = findViewById(R.id.btn_cancel)
+
+        // Play alarm sound to alert the user immediately
+        try {
+            val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            ringtone = RingtoneManager.getRingtone(applicationContext, alarmUri)
+            ringtone?.play()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         // Start the 10-second countdown
         startCountdown()
 
-        // If user clicks "Send Now"
         btnSendNow.setOnClickListener {
-            countDownTimer?.cancel() // stop the countdown
-            SmsUtils.sendEmergency(this, false) // send SMS immediately
-            finishAffinity() // close overlay & return to home screen
+            stopAlertSound()
+            countDownTimer?.cancel()
+            SmsUtils.sendEmergency(this, false)
+            finishAffinity()
         }
 
-        // If user clicks "Cancel"
         btnCancel.setOnClickListener {
+            stopAlertSound()
             countDownTimer?.cancel()
-            finish() // just close overlay, no SMS sent
+            finish()
         }
     }
 
     private fun startCountdown() {
         countDownTimer = object : CountDownTimer(10_000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished / 1000
-                countdownText.text = "Sending SMS in $seconds seconds..."
+                val seconds = (millisUntilFinished / 1000).toInt()
+                countdownText.text = "${seconds}s"
+                progressBar.progress = seconds
             }
 
             override fun onFinish() {
-                // Auto send SMS after countdown finishes
+                stopAlertSound()
                 SmsUtils.sendEmergency(this@OverlayActivity, false)
-                finishAffinity() // close overlay & return to home
+                finishAffinity()
             }
         }
         countDownTimer?.start()
     }
 
+    private fun stopAlertSound() {
+        try {
+            ringtone?.stop()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        stopAlertSound()
         countDownTimer?.cancel()
     }
 }
